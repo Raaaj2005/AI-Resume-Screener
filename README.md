@@ -1,6 +1,6 @@
 # 🧠 AI Resume Screener
 
-An LLM-powered pipeline that automatically parses a batch of resumes, compares each one against a job description, and ranks candidates by fit — built as part of an AI engineering course project.
+An LLM-powered pipeline that automatically parses a batch of resumes, compares each one against a job description, and ranks candidates by fit.
 
 Instead of a recruiter manually skimming dozens of PDFs, this tool extracts structured data from the job description **and** every resume using an LLM, then asks the LLM to score each candidate against the role and surface the strongest and weakest matches.
 
@@ -9,10 +9,10 @@ Instead of a recruiter manually skimming dozens of PDFs, this tool extracts stru
 ## ✨ Features
 
 - 📄 **Multi-format resume parsing** — reads both `.pdf` and `.docx` resumes
-- 🧩 **Structured extraction** — converts unstructured job descriptions and resumes into clean, validated JSON using [Pydantic](https://docs.pydantic.dev/) schemas
-- 🤖 **LLM-driven matching** — uses Groq's `openai/gpt-oss-120b` model to intelligently compare skills, experience, and requirements (not just keyword matching)
-- 🏆 **Automatic ranking** — sorts all candidates by match score and reports the top 2 and bottom 2
-- 🧠 **Heading-agnostic parsing** — recognizes experience/skills sections even when resumes use different headings ("Work History", "Employment", "Internships", etc.)
+- 🧩 **Structured extraction** - converts unstructured job descriptions and resumes into clean, validated JSON using [Pydantic](https://docs.pydantic.dev/) schemas
+- 🤖 **LLM-driven matching** - uses Groq's `openai/gpt-oss-120b` model to intelligently compare skills, experience, and requirements (not just keyword matching)
+- 🏆 **Automatic ranking** - sorts all candidates by match score and reports the top 2 and bottom 2
+- 🧠 **Heading-agnostic parsing** - recognizes experience/skills sections even when resumes use different headings ("Work History", "Employment", "Internships", etc.)
 
 ---
 
@@ -29,23 +29,23 @@ Instead of a recruiter manually skimming dozens of PDFs, this tool extracts stru
                     └──────────┬──────────┘
                                │
         ┌──────────────────────┴───────────────────────┐
-        │           For each resume in /resumes/         │
-        ▼                                                │
-┌───────────────────┐                                    │
-│  Extract raw text  │ (PDF/DOCX)                         │
-└─────────┬──────────┘                                    │
-          │ LLM Call 2                                    │
-          ▼                                               │
-┌───────────────────┐                                     │
-│  Structured Resume  │ (skills, experience, education)    │
-└─────────┬──────────┘                                     │
-          │ LLM Call 3                                     │
-          ▼                                                │
-┌───────────────────┐                                      │
-│   Match Score (%)   │◄─────────────────────────────────┘
-│  + missing skills   │
-│  + final verdict     │
-└─────────┬──────────┘
+        │           For each resume in /resumes/       │
+        ▼                                              │
+┌───────────────────┐                                  │
+│  Extract raw text │ (PDF/DOCX)                       │
+└─────────┬─────────┘                                  │
+          │ LLM Call 2                                 │
+          ▼                                            │
+┌───────────────────┐                                  │
+│ Structured Resume │ (skills, experience, education)  │
+└─────────┬─────────┘                                  │
+          │ LLM Call 3                                 │
+          ▼                                            │
+┌───────────────────┐                                  │
+│   Match Score (%) │◄─────────────────────────────────┘
+│  + missing skills │
+│  + final verdict  │
+└─────────┬─────────┘
           ▼
    Sort all candidates
           ▼
@@ -76,7 +76,7 @@ Instead of a recruiter manually skimming dozens of PDFs, this tool extracts stru
 ## 📁 Project Structure
 
 ```
-day5/
+AI-Resume-Screener/
 ├── resume_parser.py     # Main pipeline: extraction, parsing, scoring, ranking
 ├── resumes/             # Drop candidate resumes here (.pdf / .docx) — not tracked in git
 ├── pyproject.toml       # Project dependencies
@@ -144,20 +144,12 @@ LOWEST 2 CANDIDATES
 
 ## ⚠️ Known Limitations
 
-- The job description is currently hardcoded inside `resume_parser.py` — could be extended to accept a job description as a file input or CLI argument.
+- The job description is currently hardcoded inside `resume_parser.py`, could be extended to accept a job description as a file input or CLI argument.
 - No retry/backoff logic around the Groq API calls beyond a fixed `time.sleep(5)` between requests.
 - Resumes with no extractable text (e.g., scanned image-based PDFs) will fail silently, since `read_pdf` only calls `extract_text()`.
 
-## 🔮 Possible Improvements
+## Author Details
 
-- Accept the job description via CLI/file instead of hardcoding it
-- Add OCR fallback for scanned/image-based resumes
-- Export results to a CSV/JSON report instead of just printing to console
-- Add proper error handling around malformed LLM JSON responses
-- Parallelize resume processing instead of sequential API calls
-
----
-
-## 📄 License
-
-This project was built for educational purposes as part of an AI engineering course.
+**Name:** Raj Fatehveer Singh Brar<br>
+**Roll No.:** 102317090<br>
+**Email ID:** rbrar_be23@thapar.edu
